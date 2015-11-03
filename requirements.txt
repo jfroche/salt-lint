@@ -1,2 +1,4 @@
 voluptuous
 ipython
+salt
+pytest

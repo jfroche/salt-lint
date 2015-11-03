@@ -1,3 +1,9 @@
 *.swp
 *.pyc
 __pycache__
+bin/
+include/
+lib/
+local/
+*.egg-info
+.cache

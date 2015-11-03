@@ -6,7 +6,6 @@ import salt.config
 import salt.loader
 from inspect import getargspec
 import importlib
-from IPython.core.debugger import Tracer
 
 def tabcheck(content, filename):
 
@@ -144,9 +143,7 @@ def run(filename):
     ERRORS = ERRORS + trailingwscheck(content,filename) + indentcheck(content, filename) + slscheck(content, filename)
   return ERRORS
 
-
-if __name__ == '__main__':
-
+def main():
   ERRS = []
   for file in sys.argv[1:]:
     ERRS = ERRS + run(file)
@@ -161,3 +158,6 @@ if __name__ == '__main__':
     sys.exit(0)
   else:
     sys.exit(1)
+
+if __name__ == '__main__':
+    main()
