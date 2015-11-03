@@ -7,3 +7,4 @@ lib/
 local/
 *.egg-info
 .cache
+.eggs
