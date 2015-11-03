@@ -4,7 +4,6 @@ import sys
 import re
 import salt.config
 import salt.loader
-from inspect import getargspec
 import importlib
 
 
@@ -112,28 +111,11 @@ def slscheck(content, filename):
             match = prog.match(state)
             if match:
                 (state, method) = state.split('.')
-            else:
-                method = options.pop(0)
 
             try:
-                package = importlib.import_module("salt.states.%s" % state)
+                importlib.import_module(state)
             except:
                 ERRORS.append(ParseError(filename, 0, 'id \'%s\' contains unknown state \'%s\'' % (id, state)))
-
-            try:
-                args = getargspec(getattr(package, method)).args
-
-                """ extra options not available to getargspec """
-                args = args + ['watch', 'watch_in', 'require', 'require_in']
-                if state == 'file' and method == 'serialize':
-                    args.append('formatter')
-
-                for opt in options:
-                    option = opt.keys()[0]
-                    if option not in args:
-                        ERRORS.append(ParseError(filename, 0, '%s state with id \'%s\' contains unknown option \'%s\'' % (state, id, option)))
-            except:
-                ERRORS.append(ParseError(filename, 0, '%s state with id \'%s\' contains unknown method \'%s\'' % (state, id, method)))
 
     return ERRORS
 
